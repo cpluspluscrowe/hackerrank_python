@@ -19,7 +19,6 @@ class Solution {
       currentX1 = getNextJump(currentX1, v1)
       currentX2 = getNextJump(currentX2, v2)
       difference = currentX1 - currentX2
-      println(difference)
       if (difference == 0) return "YES"
       if (difference < 0) return "NO"
       if (difference > oldDifference) return "NO"
@@ -27,7 +26,7 @@ class Solution {
     }
     "NO"
   }
-  def interativeKangaroo(x1: Int, v1: Int, x2: Int, v2: Int): String = {
+  def iterativeKangaroo(x1: Int, v1: Int, x2: Int, v2: Int): String = {
     // Cooler solution
     var differences = Set[Int]()
     var currentX1: Int = x1
