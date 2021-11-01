@@ -1,4 +1,5 @@
 import scala.collection.SortedMap
+import scala.collection.SortedSet
 import java.util.Collections
 object Result {
 
@@ -10,6 +11,18 @@ object Result {
      *  1. INTEGER_ARRAY ranked
      *  2. INTEGER_ARRAY player
      */
+
+  def getPrecedingScore2(newScore: Int, sortedKeys: SortedSet[Int]): Int = {
+    var lowestSoFar = sortedKeys.head    
+    for(key <- sortedKeys){
+      if(key <= newScore){
+        if(key > lowestSoFar){
+          lowestSoFar = key
+        }
+      }
+    }
+    lowestSoFar
+  }
 
   def getPrecedingScore(newScore: Int, sortedKeys: Array[Int]): Int = {
     var high = sortedKeys.size - 1
@@ -59,7 +72,7 @@ object Result {
   def getPlayerScoreRank(newScore: Int, sortedScores: SortedMap[Int, Int], accumulations: Array[Int]): (Int, SortedMap[Int, Int], Array[Int]) = {
     val decrementFinalRankBy = getAccumulation(newScore, accumulations)
     val lowerScoreBy = getAccumulation(newScore, accumulations)
-    val existingLowerOrEqualScore: Int = getPrecedingScore(newScore, sortedScores.keySet.toArray)
+    val existingLowerOrEqualScore: Int = getPrecedingScore2(newScore, sortedScores.keySet)
     val oldRank = sortedScores(existingLowerOrEqualScore)
     val newScoreRank = getRank(newScore, existingLowerOrEqualScore, oldRank)
     val newTreeMap = sortedScores + (newScore -> newScoreRank)
